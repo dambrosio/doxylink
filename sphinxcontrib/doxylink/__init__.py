@@ -1,10 +1,13 @@
-__version__ = "1.12.3"
+from . import config
 
+__version__ = "1.12.3"
 
 def setup(app):
     from .doxylink import setup_doxylink_roles
     app.add_config_value('doxylink', {}, 'env')
     app.add_config_value('doxylink_pdf_files', {}, 'env')
+    app.add_config_value(config.DOXYLINK_IGNORE_PARSE_EXCEPTIONS_KEY,
+                         default=False, types=bool, rebuild='env')
     app.connect('builder-inited', setup_doxylink_roles)
 
     return {
